@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Wife ❤️</title>
+    <style>
+        /* --- ELEGANT NEW FONTS --- */
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;700&display=swap');
+
+        /* Prevent scrolling/bouncing on iPhone */
+        html, body {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffafbd;
+            background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
+            font-family: 'Montserrat', sans-serif; /* Clean body font */
+            text-align: center;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 35px;
+            border-radius: 40px;
+            box-shadow: 0 20px 40px rgba(214, 51, 108, 0.2);
+            z-index: 10;
+            width: 85%;
+            max-width: 350px;
+            border: 2px solid #fff;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive; /* Fancy script font */
+            color: #d6336c;
+            font-size: 3rem;
+            margin-bottom: 5px;
+            font-weight: 400;
+        }
+
+        .gif-container img {
+            width: 160px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            height: 60px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 28px;
+            font-size: 1.1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            -webkit-tap-highlight-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #yesBtn {
+            background: linear-gradient(45deg, #ff3366, #ff6b6b);
+            color: white;
+            box-shadow: 0 8px 20px rgba(255, 51, 102, 0.4);
+            animation: heartbeat 1.2s infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.1); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        #noBtn {
+            background-color: #ffffff;
+            color: #d6336c;
+            border: 2px solid #ff3366;
+        }
+
+        #success {
+            display: none;
+            color: #fff;
+            z-index: 20;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        #success h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem;
+            margin: 0;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="fireworks"></canvas>
+
+    <div class="card" id="questionCard">
+        <div class="gif-container">
+            <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3aHAyYjZvcWQxMnF1cHg1Z3gxOGN1amZ1djZhOTc2amxjbGdic21kOSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/gjHkRHSuHqu99y9Yjt/giphy.gif" alt="Please">
+        </div>
+        <h1>Be mine? ❤️</h1>
+        <p style="color: #888; font-size: 0.9rem; font-weight: 400; letter-spacing: 0.5px;">Click the button below...</p>
+        <div class="buttons">
+            <button id="yesBtn" onclick="celebrate()">YES!</button>
+            <button id="noBtn" ontouchstart="dodge()" onmouseover="dodge()">No</button>
+        </div>
+    </div>
+
+    <div id="success">
+        <div class="gif-container">
+            <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3aHAyYjZvcWQxMnF1cHg1Z3gxOGN1amZ1djZhOTc2amxjbGdic21kOSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/IVK6xNBpEAHYyOdghk/giphy.gif" alt="Happy">
+        </div>
+        <h2>Forever! ❤️</h2>
+        <p style="font-size: 1.4rem; font-weight: 300; letter-spacing: 2px;">I LOVE YOU SO MUCH</p>
+    </div>
+
+    <script>
+        const card = document.getElementById('questionCard');
+        const success = document.getElementById('success');
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+
+        function dodge() {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+            
+            let curSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+            if (curSize < 100) {
+                yesBtn.style.fontSize = (curSize + 5) + "px";
+                yesBtn.style.padding = (parseFloat(window.getComputedStyle(yesBtn).padding) + 2) + "px";
+            }
+        }
+
+        function celebrate() {
+            card.style.display = 'none';
+            success.style.display = 'block';
+            document.body.style.background = '#1a1a1a';
+            startFireworks();
+        }
+
+        const canvas = document.getElementById('fireworks');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.velocity = {
+                    x: (Math.random() - 0.5) * (window.innerWidth < 500 ? 8 : 12),
+                    y: (Math.random() - 0.5) * (window.innerWidth < 500 ? 8 : 12)
+                };
+                this.alpha = 1;
+                this.friction = 0.95;
+            }
+
+            draw() {
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+
+            update() {
+                this.velocity.x *= this.friction;
+                this.velocity.y *= this.friction;
+                this.velocity.y += 0.08; 
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+                this.alpha -= 0.012;
+            }
+        }
+
+        function createFirework(x, y) {
+            const colors = ['#ff3366', '#ff00ff', '#ffcc00', '#ffffff', '#00ffcc'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            for (let i = 0; i < 35; i++) {
+                particles.push(new Particle(x, y, color));
+            }
+        }
+
+        function startFireworks() {
+            function animate() {
+                requestAnimationFrame(animate);
+                ctx.fillStyle = 'rgba(26, 26, 26, 0.2)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                particles.forEach((p, i) => {
+                    if (p.alpha <= 0) {
+                        particles.splice(i, 1);
+                    } else {
+                        p.update();
+                        p.draw();
+                    }
+                });
+            }
+            animate();
+            
+            setInterval(() => {
+                createFirework(Math.random() * canvas.width, Math.random() * canvas.height * 0.7);
+            }, 500);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
